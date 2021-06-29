@@ -12,18 +12,6 @@ Selenium kütüphanesi kullanıldı. (pip install selenium)
 
 ! Çıktı alacağınız yazıcıyı varsayılan olarak ayarlayınız.
 
-# Kullanım
-
-Windows kullananlar 'releases' kısmından HutbePrint_win.zip dosyasını indirip kullanabilirler.
-
-Linux kullanım : 
-
-- "releases" kısmından HutbePrint_linux.zip dosyasını indiriniz.
-
-- Herhangi bir konuma dosyaları çıkarınız.
-
-- Dosyaların olduğu konumda terminalde ```./main``` komutu ile çalıştırınız.
-
 # Ekran Görüntüsü
 
 <img width="50%" src="https://user-images.githubusercontent.com/49123562/123829681-5478c280-d90b-11eb-8491-1aa06e547135.png">
