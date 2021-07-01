@@ -39,18 +39,21 @@ def createDr(headless):
     else:
         return webdriver.Chrome(f'./{drVer}/chromedriver',options=options)
 
-def exceptPrint(uyari):
-    print(uyari)
-    input("Kapatmak için 'enter'a basınız...")
-    exit()
+def drUpdater():
+    try:
+        print("'chromedriver' indiriliyor...")
+        chromedriver_autoinstaller.install("./")  
+    except:
+        input("\nInternet bağlantınızı kontrol edin !\nKapatmak için 'enter'a basınız...")
+        exit()
 
 def main():
 
     try:
-        chromedriver_autoinstaller.install("./")      
         dr = createDr(True)
     except:
-        exceptPrint("'chromedriver' bulunamadı veya güncel değil. Internet bağlantınızı kontrol edin !")
+        drUpdater()
+        dr = createDr(True)
 
     try:
         dr.minimize_window()
@@ -81,7 +84,8 @@ def main():
         sleep(5)
 
     except:
-        exceptPrint("Internet Baglantı Sorunu !")
+        input("\nInternet bağlantınızı kontrol edin !\nKapatmak için 'enter'a basınız...")
+        exit()
 
 if __name__ == '__main__':
     main()
