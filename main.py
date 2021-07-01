@@ -2,7 +2,10 @@ import os
 from selenium import webdriver
 import json
 from time import sleep
+import chromedriver_autoinstaller
 
+drVer = str(chromedriver_autoinstaller.get_chrome_version())
+drVer = drVer[0:drVer.index(".")]
 hutbeler = [[],[],[]]
 
 def printHutbeler(hutbeler):
@@ -14,32 +17,43 @@ def printHutbeler(hutbeler):
  3  | {hutbeler[2][0]} | {hutbeler[2][1]}
 """)
 
+def createDr(headless):
+    options = webdriver.ChromeOptions()
+    settings = {
+    "recentDestinations": [{
+        "id": "Default",
+        "origin": "local",
+        "account": "",
+    }],
+    "selectedDestinationId": "Default",
+    "version": 2
+    }
+    prefs = {'printing.print_preview_sticky_settings.appState': json.dumps(settings)}
+    options.add_experimental_option('prefs', prefs)
+    options.add_argument('--kiosk-printing')
+    options.add_argument('--log-level=3')
+    options.set_headless(headless)
+
+    if(os.name == "nt"):
+        return webdriver.Chrome(f'./{drVer}/chromedriver.exe',options=options)
+    else:
+        return webdriver.Chrome(f'./{drVer}/chromedriver',options=options)
+
+def exceptPrint(uyari):
+    print(uyari)
+    input("Kapatmak için 'enter'a basınız...")
+    exit()
+
 def main():
     try:
-        options = webdriver.ChromeOptions()
-        settings = {
-        "recentDestinations": [{
-            "id": "Default",
-            "origin": "local",
-            "account": "",
-        }],
-        "selectedDestinationId": "Default",
-        "version": 2
-        }
-        prefs = {'printing.print_preview_sticky_settings.appState': json.dumps(settings)}
-        options.add_experimental_option('prefs', prefs)
-        options.add_argument('--kiosk-printing')
-        options.add_argument('--log-level=3')
-
-        if(os.name == "nt"):
-            dr = webdriver.Chrome('./chromedriver.exe',options=options)
-        else:
-            dr = webdriver.Chrome('./chromedriver',options=options)
-            
+        chromedriver_autoinstaller.install("./")
     except:
-        print("'chromedriver' bulunamadı !")
-        input("Kapatmak için 'enter'a basınız...")
-        exit()
+        exceptPrint("'chromedriver' güncellenemedi. Internet bağlantınızı kontrol edin !")
+
+    try:      
+        dr = createDr(True)
+    except:
+        exceptPrint("'chromedriver' bulunamadı !")
 
     try:
         dr.minimize_window()
@@ -52,23 +66,25 @@ def main():
 
             hutbeler[i-1].append(dr.find_element_by_xpath(f'/html/body/form/div[5]/div/div[2]/div/div/span/div[3]/div/div/div/div/div/div/div[2]/table/tbody/tr/td/table/tbody/tr[{i}]/td[4]/a').text) #Hutbe link adı alıyor
 
-        os.system('cls' if os.name == 'nt' else 'clear')
+        dr.quit()
 
+        os.system('cls' if os.name == 'nt' else 'clear')
         printHutbeler(hutbeler)
 
         hutbeNo = 0
         while (hutbeNo < 1 or hutbeNo > 3):
             hutbeNo = int(input("Hutbe NO : "))
 
-        dr.get(f'https://dinhizmetleri.diyanet.gov.tr/Documents/{hutbeler[hutbeNo-1][2]}.pdf')
+        dr = createDr(False)
+
         dr.minimize_window()
+        dr.get(f'https://dinhizmetleri.diyanet.gov.tr/Documents/{hutbeler[hutbeNo-1][2]}.pdf')
         dr.execute_script("window.print();")
+        
         sleep(5)
 
     except:
-        print("Internet Baglantı Sorunu !")
-        input("Kapatmak için 'enter'a basınız...")
-        exit()
+        exceptPrint("Internet Baglantı Sorunu !")
 
 if __name__ == '__main__':
     main()
