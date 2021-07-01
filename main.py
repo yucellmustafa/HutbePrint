@@ -45,15 +45,12 @@ def exceptPrint(uyari):
     exit()
 
 def main():
-    try:
-        chromedriver_autoinstaller.install("./")
-    except:
-        exceptPrint("'chromedriver' güncellenemedi. Internet bağlantınızı kontrol edin !")
 
-    try:      
+    try:
+        chromedriver_autoinstaller.install("./")      
         dr = createDr(True)
     except:
-        exceptPrint("'chromedriver' bulunamadı !")
+        exceptPrint("'chromedriver' bulunamadı veya güncel değil. Internet bağlantınızı kontrol edin !")
 
     try:
         dr.minimize_window()
