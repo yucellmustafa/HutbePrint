@@ -3,10 +3,11 @@ Diyanet Hutbelerini Çıktı Alan Program
 
 Selenium kütüphanesi kullanıldı. (pip install selenium)
 
-# Bilgilendirme
-- Icon sahibi : [Icon](https://www.flaticon.com/free-icon/printer_839184?term=printer&page=1&position=11&page=1&position=11&related_id=839184&origin=tag)
+chromedriver'i güncelleyen kütüphane. (pip install chromedriver_autoinstaller)
 
-! Kullanmadan önce işletim sisteminize ve chrome sürümünüze uygun chromedriver dosyasını indiriniz. Daha sonra ana klasördeki dosya ile değiştiriniz. ([chromedriver](https://chromedriver.chromium.org/downloads))
+# Bilgilendirme
+
+- Icon sahibi : [Icon](https://www.flaticon.com/free-icon/printer_839184?term=printer&page=1&position=11&page=1&position=11&related_id=839184&origin=tag)
 
 ! Çıktı alacağınız yazıcıyı varsayılan olarak ayarlayınız.
 
