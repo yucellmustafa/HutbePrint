@@ -72,13 +72,13 @@ def main():
         printHutbeler(hutbeler)
 
         hutbeNo = 0
-        while (hutbeNo < 1 or hutbeNo > 3):
-            hutbeNo = int(input("Hutbe NO : "))
+        while (hutbeNo not in ("1","2","3")):
+            hutbeNo = input("Hutbe NO : ")
 
         dr = createDr(False)
 
         dr.minimize_window()
-        dr.get(f'https://dinhizmetleri.diyanet.gov.tr/Documents/{hutbeler[hutbeNo-1][2]}.pdf')
+        dr.get(f'https://dinhizmetleri.diyanet.gov.tr/Documents/{hutbeler[int(hutbeNo)-1][2]}.pdf')
         dr.execute_script("window.print();")
         
         sleep(5)
